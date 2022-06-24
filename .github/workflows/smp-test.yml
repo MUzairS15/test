@@ -2,7 +2,7 @@ name: Meshery SMP Action
 on:
   push:
     branches:
-      'master'
+      'main'
 
 jobs:
   performance-test:
