@@ -1,0 +1,29 @@
+name: Meshery SMP Action
+on:
+  push:
+    branches:
+      'master'
+
+jobs:
+  performance-test:
+    name: Performance Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          ref: 'perf'
+
+      - name: Deploy k8s-minikube
+        uses: manusa/actions-setup-minikube@v2.4.1
+        with:
+          minikube version: 'v1.21.0'
+          kubernetes version: 'v1.20.7'
+          driver: docker
+
+      - name: Run Performance Test
+        uses: layer5io/meshery-smp-action@master
+        with:
+          provider_token: ${{ secrets.PROVIDER_TOKEN }}
+          platform: docker
+          profile_name: test
